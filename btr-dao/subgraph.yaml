@@ -1,0 +1,36 @@
+specVersion: 0.0.8
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BTRDAO
+    network: sepolia
+    source:
+      address: "0x1ecf5e8ECc84edCbc829323185e786CD9F78adbe"
+      abi: BTRDAO
+      startBlock: 5086448
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DAOProposal
+        - DAOMember
+        - ProposalAcceptedToVote
+        - ProposalRejectedForNoVote
+        - ProposalExecuted
+      abis:
+        - name: BTRDAO
+          file: ./abis/BTRDAO.json
+      eventHandlers:
+        - event: AcceptOrDenyProposal(bytes,bytes,address,uint256,bool)
+          handler: handleAcceptOrDenyProposal
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: ProposalCreated(bytes,bytes,address)
+          handler: handleProposalCreated
+        - event: ProposalExecuted(bytes,bytes,address)
+          handler: handleProposalExecuted
+        - event: ProposalVoted(bytes,bytes,address,uint8,address)
+          handler: handleProposalVoted
+      file: ./src/btrdao.ts

@@ -1,0 +1,31 @@
+type DAOProposal @entity {
+      id: String!
+      title: Bytes!
+      proposal: Bytes!
+      proposalOwner: DAOMember!
+      proposalAccepted: Boolean
+      proposalExecuted: Boolean
+      votedYes: BigInt
+      votedNo: BigInt
+      proposalValidationTime: BigInt
+}
+
+type DAOMember @entity(immutable:true) {
+   id: Bytes!
+   daoProposals: [DAOProposal!]! @derivedFrom(field: "proposalOwner")
+}
+
+type ProposalAcceptedToVote @entity(immutable:true) {
+   id: String!
+   proposal: DAOProposal! 
+}
+
+type ProposalRejectedForNoVote @entity(immutable:true) {
+   id: String!
+   proposal: DAOProposal! 
+}
+
+type ProposalExecuted @entity(immutable:true) {
+   id: String!
+   proposal: DAOProposal!
+}

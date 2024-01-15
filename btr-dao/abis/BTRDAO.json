@@ -1,0 +1,350 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_btrNFTAddress", "type": "address" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  { "inputs": [], "name": "ALREADY_VOTED", "type": "error" },
+  { "inputs": [], "name": "CANT_MAKE_PROPOSAL_YET", "type": "error" },
+  { "inputs": [], "name": "DEADLINE_PASSED", "type": "error" },
+  { "inputs": [], "name": "HASNT_BEEN_7_DAYS", "type": "error" },
+  { "inputs": [], "name": "MINIMUM_OF_15_VOTES", "type": "error" },
+  { "inputs": [], "name": "NFT_BALANCE_EMPTY", "type": "error" },
+  { "inputs": [], "name": "NOT_AN_OWNER", "type": "error" },
+  { "inputs": [], "name": "NOT_ENOUGH_YES_VOTES", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" }
+    ],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  { "inputs": [], "name": "PROPOSAL_ALREADY_VALIDATED", "type": "error" },
+  { "inputs": [], "name": "PROPOSAL_DOESNT_EXIST", "type": "error" },
+  { "inputs": [], "name": "PROPOSAL_HASNT_BEEN_ACCEPTED", "type": "error" },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "title",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "proposal",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proposalOwner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "proposalValidationTime",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "proposalAccepted",
+        "type": "bool"
+      }
+    ],
+    "name": "AcceptOrDenyProposal",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "title",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "proposal",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proposalOwner",
+        "type": "address"
+      }
+    ],
+    "name": "ProposalCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "title",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "proposal",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proposalOwner",
+        "type": "address"
+      }
+    ],
+    "name": "ProposalExecuted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "title",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "proposal",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proposalOwner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum BTRDAO.Vote",
+        "name": "vote",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "voter",
+        "type": "address"
+      }
+    ],
+    "name": "ProposalVoted",
+    "type": "event"
+  },
+  { "stateMutability": "payable", "type": "fallback" },
+  {
+    "inputs": [
+      { "internalType": "bool", "name": "_acceptProposal", "type": "bool" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "acceptOrDenyProposal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_secondOwner", "type": "address" }
+    ],
+    "name": "addSecondDAOOwner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bTRNFTAddress",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "btrProposals",
+    "outputs": [
+      { "internalType": "bytes", "name": "title", "type": "bytes" },
+      { "internalType": "bytes", "name": "proposal", "type": "bytes" },
+      { "internalType": "address", "name": "proposalOwner", "type": "address" },
+      { "internalType": "bool", "name": "proposalAccepted", "type": "bool" },
+      {
+        "internalType": "bool",
+        "name": "proposalAlreadyValidated",
+        "type": "bool"
+      },
+      { "internalType": "bool", "name": "proposalExecuted", "type": "bool" },
+      { "internalType": "uint256", "name": "votedYes", "type": "uint256" },
+      { "internalType": "uint256", "name": "votedNo", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalVotes", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "proposalDeadline",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "canCreateAnotherProposal",
+    "outputs": [
+      { "internalType": "bool", "name": "", "type": "bool" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_title", "type": "string" },
+      { "internalType": "string", "name": "_proposal", "type": "string" }
+    ],
+    "name": "createProposal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "currentIndex",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "executeProposal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "haveYouVotedThisProposal",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "secondOwner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "viewACreatedProposal",
+    "outputs": [
+      { "internalType": "string", "name": "proposal", "type": "string" },
+      { "internalType": "address", "name": "proposalOwner", "type": "address" },
+      { "internalType": "bool", "name": "proposalAccepted", "type": "bool" },
+      {
+        "internalType": "bool",
+        "name": "proposalAlreadyValidated",
+        "type": "bool"
+      },
+      { "internalType": "bool", "name": "proposalExecuted", "type": "bool" },
+      { "internalType": "uint256", "name": "votedYes", "type": "uint256" },
+      { "internalType": "uint256", "name": "votedNo", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalVotes", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "proposalDeadline",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "enum BTRDAO.Vote", "name": "vote", "type": "uint8" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "voteOnProposal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawAnyFunds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "stateMutability": "payable", "type": "receive" }
+]
